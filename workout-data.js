@@ -7,6 +7,11 @@ window.WORKOUT_CONFIG = {
   title: "My workout plan.",
   eyebrow: "WEEKLY ROUTINE",
   subtitle: "3 days/week · Alternate Push / Pull · Active recovery",
+  // Display-only rotation for the weekly muscle charts; exercise prescriptions do not change.
+  rotation: [
+    {label:"Week 1",sessions:["push","pull","push"]},
+    {label:"Week 2",sessions:["pull","push","pull"]}
+  ],
   sessions: [
     {id:"push",title:"Push Focus",type:"strength",items:[
       {id:"calf",exercise:"Calf Raise",sets:3,reps:"15–25"},
