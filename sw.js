@@ -1,5 +1,5 @@
 // App shell is cached per template release. External exercise photos remain network-only.
-const CACHE = 'workout-shell-v1.3.0';
+const CACHE = 'workout-shell-v1.3.1';
 const APP_FILES = ['./', './index.html', './workout-data.js', './template-version.js', './manifest.webmanifest', './assets/icon-192.png', './assets/icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(APP_FILES)).then(() => self.skipWaiting()));
