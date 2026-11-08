@@ -1,6 +1,6 @@
 # Workout Plan Template
 
-A ready-made, minimalist workout checklist site for desktop and mobile. It includes grayscale exercise images, front/back muscle SVG heatmaps and two comparable weekly radar charts and a two-week average.
+A ready-made, minimalist workout checklist site for desktop and mobile. It includes grayscale exercise images, front/back muscle SVG heatmaps and the original overall muscle-balance radar, two comparable weekly radars and a two-week average.
 
 **Live example:** https://hmetgundogdu.github.io/my-workout-program/
 
@@ -13,7 +13,7 @@ A ready-made, minimalist workout checklist site for desktop and mobile. It inclu
 
 The preview screenshots are generated from the actual site by [GitHub Actions](./.github/workflows/preview.yml) whenever the application changes.
 
-**Template version:** v1.3.0 (also visible in the page header)
+**Template version:** v1.3.1 (also visible in the page header)
 
 ## Install as an app (PWA)
 
@@ -52,7 +52,7 @@ rotation: [
 ],
 ```
 
-Each session ID must match a strength session in `sessions`. Repeating an ID means that workout occurs more than once in that week; it does **not** create another workout checklist. The two radar charts use the **same scale** for direct visual comparison. **Two-Week Average** reports the mean estimated weighted sets **per training week**, not the sum of both weeks. Exercises, sets and repetitions remain unchanged. When no rotation is configured, the original single-week summary still works.
+Each session ID must match a strength session in `sessions`. Repeating an ID means that workout occurs more than once in that week; it does **not** create another workout checklist. The two weekly radar charts use the **same scale** for direct visual comparison. Above them, the **Overall Muscle Balance** radar shows the mean weekly distribution with its original adjacent set breakdown. **Two-Week Average** reports the mean estimated weighted sets **per training week**, not the sum of both weeks. Exercises, sets and repetitions remain unchanged. When no rotation is configured, the original single-week summary still works.
 
 ## Updating a copied template
 
