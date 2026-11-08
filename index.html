@@ -47,7 +47,7 @@
 </style>
 </head>
 <body><main class="wrap">
-<header class="head"><div class="eyebrow">WEEKLY ROUTINE <span id="template-version" class="version-tag" aria-label="Template version">v1.2.0</span></div><h1>My workout plan.</h1><p>3 workouts · Active recovery · A simple routine</p><button class="install-button" id="install-app" type="button">Install app</button></header>
+<header class="head"><div class="eyebrow">WEEKLY ROUTINE <span id="template-version" class="version-tag" aria-label="Template version">v1.3.0</span></div><h1>My workout plan.</h1><p>3 workouts · Active recovery · A simple routine</p><button class="install-button" id="install-app" type="button">Install app</button></header>
 <div id="program"></div><section class="overview" id="overview" aria-label="Training distribution by week"><div class="eyebrow">TRAINING DISTRIBUTION</div><h2>Muscle balance by week</h2><p class="desc" id="rotation-description">Compare estimated working-set emphasis across the training rotation.</p><div id="week-charts" class="week-charts"></div><div class="average-panel"><div class="average-heading"><h3 id="average-title">Two-Week Average</h3><span id="average-caption">Estimated sets per training week</span></div><div id="distribution" class="distribution-grid"></div></div><p class="hint">Weighted sets estimate training emphasis, not measured muscle activation or effectiveness. The weekly charts share one scale for direct comparison.</p></section>
 <footer>Your checkmarks are saved only in this browser. You can reset each section at any time.</footer>
 </main>
@@ -62,7 +62,7 @@ const imagePaths=Object.fromEntries(Object.entries(config.exercises).map(([name,
 const imageBase='https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 document.querySelector('.head .eyebrow').firstChild.textContent=(config.eyebrow||'WEEKLY ROUTINE')+' ';
 const versionNode=document.getElementById('template-version');
-versionNode.textContent='v'+(window.WORKOUT_TEMPLATE_VERSION||'1.2.0');
+versionNode.textContent='v'+(window.WORKOUT_TEMPLATE_VERSION||'1.3.0');
 document.querySelector('.head h1').textContent=config.title||'Workout Plan';
 document.querySelector('.head p').textContent=config.subtitle||'';
 const key='simple-workout-checks-v1';let state={};try{state=JSON.parse(localStorage.getItem(key)||'{}')||{}}catch{}const save=()=>{try{localStorage.setItem(key,JSON.stringify(state))}catch{}};
