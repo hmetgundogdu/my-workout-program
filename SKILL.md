@@ -22,7 +22,7 @@ Do NOT generate new HTML, new CSS, new muscle anatomy illustrations, new charts,
 ## Template version and opt-in upstream updates
 
 **Official upstream source:** https://github.com/hmetgundogdu/my-workout-program  
-**Version source of truth:** `template-version.js`, which defines `window.WORKOUT_TEMPLATE_VERSION` as a semantic version string. The current initial versioned release is **v1.2.0**. Its label is shown beside WEEKLY ROUTINE. A user's exercise customization never increases the template version.
+**Version source of truth:** `template-version.js`, which defines `window.WORKOUT_TEMPLATE_VERSION` as a semantic version string. The current versioned release is **v1.3.0**. Its label is shown beside WEEKLY ROUTINE. A user's exercise customization never increases the template version.
 
 ### On installing the template
 - Clone/fork the complete repository and retain `template-version.js`.
@@ -50,7 +50,7 @@ Do NOT generate new HTML, new CSS, new muscle anatomy illustrations, new charts,
 - Native click/tap-friendly checkboxes, browser-only localStorage and per-section reset
 - Grayscale thumbnails via **one source**, Free Exercise DB
 - Inline SVG front and back stylized muscle figures, color mapping blue → red
-- SVG radar plot plus text list for estimated weekly muscle distribution
+- Rotation-aware weekly SVG radar plots plus a per-week average list (with single-week fallback)
 - GitHub Pages workflow; no package manager, bundler, build step or app dependencies
 - English UI, accessible labels and plain static HTML
 
@@ -94,6 +94,8 @@ window.WORKOUT_CONFIG = {
 Recognized muscle keys, all already drawn on the SVGs:
 `chest`, `back`, `shoulders`, `biceps`, `triceps`, `quads`, `hamstrings`, `calves`, `lowerBack`, `glutes`.
 
+An optional `rotation` array declares repeatable weekly schedules for the chart, e.g. `[{label:"Week 1",sessions:["push","pull","push"]},{label:"Week 2",sessions:["pull","push","pull"]}]`. Each listed ID must match a `strength` session; a repeated ID represents another occurrence that week, without cloning checklist entries. The week charts share a scale and the summary divides the total across the configured number of weeks to show **average estimated weighted sets per training week**. When `rotation` is missing or invalid, render the single-week fallback instead. Preserve `rotation` when customizing or updating the routine; don't silently overwrite a user's schedule.
+
 The radar sums (strength-session sets × estimated coefficient) for each key. An exercise's `sets` MUST be a number, not "3 × 12". The `reps` field is display text. A non-strength `prescription` is never treated as weighted sets. Estimates are not direct muscle activation measurements.
 
 Image URLs are derived from
@@ -109,8 +111,8 @@ Use generic site title and descriptions; never insert a real person's identifyin
 ## Validation requirements
 - Open both mobile (~360px) and desktop (~1280px) sizes, verify no horizontal overflow.
 - Confirm each prescribed item renders with correct sets/reps and appropriate image.
-- Confirm three things separately: per-section SVG muscle shading, radar totals, and checkboxes/reset/persistence.
-- Confirm all strength sessions (not a fixed first-three assumption) are included in radar. Recovery sessions are excluded.
+- Confirm three things separately: per-section SVG muscle shading, both rotation-week radar totals, their shared scale, per-week averages, and checkboxes/reset/persistence.
+- Confirm every configured week sums its scheduled strength-session IDs (including repetitions). Recovery sessions are excluded. When no rotation is configured, all strength sessions appear once.
 - Confirm all UI labels remain English and the reference layout/CSS was not regenerated.
 - Verify the GitHub Actions workflow is successful before reporting the new site as live.
 
