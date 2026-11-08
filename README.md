@@ -1,6 +1,6 @@
 # Workout Plan Template
 
-A ready-made, minimalist workout checklist site for desktop and mobile. It includes grayscale exercise images, front/back muscle SVG heatmaps and a weekly working-set radar chart.
+A ready-made, minimalist workout checklist site for desktop and mobile. It includes grayscale exercise images, front/back muscle SVG heatmaps and two comparable weekly radar charts and a two-week average.
 
 **Live example:** https://hmetgundogdu.github.io/my-workout-program/
 
@@ -13,7 +13,7 @@ A ready-made, minimalist workout checklist site for desktop and mobile. It inclu
 
 The preview screenshots are generated from the actual site by [GitHub Actions](./.github/workflows/preview.yml) whenever the application changes.
 
-**Template version:** v1.2.0 (also visible in the page header)
+**Template version:** v1.3.0 (also visible in the page header)
 
 ## Install as an app (PWA)
 
@@ -40,6 +40,19 @@ PWA sources: [manifest](./manifest.webmanifest), [service worker](./sw.js), [app
 **Example prompt:**
 
 > Use this repository's SKILL.md and existing code as an exact template. Do not redesign the site. Customize only workout-data.js using my routine, including matched exercise illustrations and muscle coefficients. Validate the chart and publish my own copy on GitHub Pages.
+
+## Alternating-week muscle charts
+
+When a workout alternates between two weeks, `workout-data.js` can define a display-only rotation:
+
+```js
+rotation: [
+  { label: "Week 1", sessions: ["push", "pull", "push"] },
+  { label: "Week 2", sessions: ["pull", "push", "pull"] }
+],
+```
+
+Each session ID must match a strength session in `sessions`. Repeating an ID means that workout occurs more than once in that week; it does **not** create another workout checklist. The two radar charts use the **same scale** for direct visual comparison. **Two-Week Average** reports the mean estimated weighted sets **per training week**, not the sum of both weeks. Exercises, sets and repetitions remain unchanged. When no rotation is configured, the original single-week summary still works.
 
 ## Updating a copied template
 
@@ -69,7 +82,7 @@ The application needs no framework or build step. Open `index.html` locally or p
 
 Checkbox completion is saved to the current browser's `localStorage`. There is no account, online synchronization or telemetry. If you change the order of exercises on an existing live site, stored index-based checkmarks may need to be cleared or migrated.
 
-Images use the [Free Exercise DB](https://github.com/yuhonas/free-exercise-db) collection and a common grayscale CSS treatment. Some equipment variants are approximations; verify the correct matching exercise. Muscle heatmaps and the radar describe *estimated set emphasis*, not measured muscle activation or guaranteed results.
+Images use the [Free Exercise DB](https://github.com/yuhonas/free-exercise-db) collection and a common grayscale CSS treatment. Some equipment variants are approximations; verify the correct matching exercise. Muscle heatmaps and the radar charts describe *estimated set emphasis*, not measured muscle activation or guaranteed results.
 
 ## Consistency
 
