@@ -27,7 +27,15 @@
 .body-map{width:79px;height:150px;display:block}.body-map .base{fill:#f2f3f4;stroke:#d2d6db;stroke-width:1.05;stroke-linejoin:round}.body-map .muscle{stroke:#fff;stroke-width:.9;stroke-linecap:round;stroke-linejoin:round}
 .legend{display:flex;gap:6px;align-items:center;margin-top:13px;color:#90949a;font-size:10px}.gradient{width:76px;height:5px;border-radius:10px;background:linear-gradient(90deg,#438bd8,#d4a2ac,#e24949)}
 .overview{border-top:1px solid #e9eaeb;padding:28px 0 34px}.overview h2{font-size:23px}.overview .desc{margin:8px 0 18px}
-.week-charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:22px 0}
+
+.chart-layout{display:flex;gap:20px;align-items:center;margin:14px 0 8px}
+.overall-radar{width:min(100%,340px);flex:none}
+.overall-breakdown{flex:1;min-width:0}
+.overall-breakdown .average-heading{margin-bottom:9px}
+.weekly-comparison{border-top:1px solid #e9eaeb;margin-top:28px;padding-top:26px}
+.weekly-comparison h3{font-size:18px;font-weight:650;letter-spacing:-.025em;margin:8px 0 0}
+.weekly-comparison .desc{margin:6px 0 0;font-size:12px}
+.week-charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0 0}
 .week-card{min-width:0;border:1px solid #eceef0;border-radius:12px;padding:18px 10px 12px;text-align:center}
 .week-card h3{font-size:15px;font-weight:650;letter-spacing:-.02em;margin:0 0 3px}
 .week-card p{font-size:12px;color:#92969c;line-height:1.5}
@@ -35,20 +43,19 @@
 .radar .gridline{fill:none;stroke:#e7e9ed;stroke-width:1}.radar .axis{stroke:#ebecef;stroke-width:1}
 .radar .area{fill:rgba(91,113,180,.12);stroke:#6b79b3;stroke-width:2}
 .radar text{font-size:10px;fill:#737982;font-family:inherit}
-.average-panel{border-top:1px solid #e9eaeb;padding-top:20px}
 .average-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.average-heading h3{font-size:17px;font-weight:650;letter-spacing:-.025em;margin:0}
+.average-heading h3{font-size:16px;font-weight:650;letter-spacing:-.025em;margin:0}
 .average-heading span{color:#92969c;font-size:11px}
-.distribution-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:25px;margin-top:9px}
-.dist-item{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0;padding:9px 0;border-bottom:1px solid #f0f1f2;font-size:12px}
+.distribution-list{width:100%}
+.dist-item{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0;padding:8px 0;border-bottom:1px solid #f0f1f2;font-size:12px}
 .dist-item span{color:#838890}.dist-item strong{font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
-@media(max-width:620px){.week-charts{grid-template-columns:1fr;gap:12px}.week-card{padding:18px 12px 10px}.radar{max-width:330px}}
-@media(max-width:520px){.muscle-panel{gap:8px}.muscle-views{gap:1px}.body-map{width:62px;height:124px}.distribution-grid{grid-template-columns:1fr}.average-heading{flex-wrap:wrap}}
+@media(max-width:620px){.chart-layout{flex-direction:column;align-items:stretch}.overall-radar{width:100%;max-width:330px;align-self:center}.overall-breakdown{width:100%}.week-charts{grid-template-columns:1fr;gap:12px}.week-card{padding:18px 12px 10px}.radar{max-width:330px}}
+@media(max-width:520px){.muscle-panel{gap:8px}.muscle-views{gap:1px}.body-map{width:62px;height:124px}.average-heading{flex-wrap:wrap}}
 </style>
 </head>
 <body><main class="wrap">
 <header class="head"><div class="eyebrow">WEEKLY ROUTINE <span id="template-version" class="version-tag" aria-label="Template version">v1.3.0</span></div><h1>My workout plan.</h1><p>3 workouts · Active recovery · A simple routine</p><button class="install-button" id="install-app" type="button">Install app</button></header>
-<div id="program"></div><section class="overview" id="overview" aria-label="Training distribution by week"><div class="eyebrow">TRAINING DISTRIBUTION</div><h2>Muscle balance by week</h2><p class="desc" id="rotation-description">Compare estimated working-set emphasis across the training rotation.</p><div id="week-charts" class="week-charts"></div><div class="average-panel"><div class="average-heading"><h3 id="average-title">Two-Week Average</h3><span id="average-caption">Estimated sets per training week</span></div><div id="distribution" class="distribution-grid"></div></div><p class="hint">Weighted sets estimate training emphasis, not measured muscle activation or effectiveness. The weekly charts share one scale for direct comparison.</p></section>
+<div id="program"></div><section class="overview" id="overview" aria-label="Overall and weekly muscle distribution"><div class="eyebrow">TRAINING DISTRIBUTION</div><h2>Overall Muscle Balance</h2><p class="desc" id="rotation-description">Average estimated muscle emphasis per training week.</p><div class="chart-layout"><div id="radar" class="overall-radar"></div><div class="overall-breakdown"><div class="average-heading"><h3 id="average-title">Two-Week Average</h3><span id="average-caption">Weighted sets / week</span></div><div id="distribution" class="distribution-list"></div></div></div><div id="weekly-comparison" class="weekly-comparison"><div class="eyebrow">WEEKLY ROTATION</div><h3>Week-by-Week Comparison</h3><p class="desc">The weekly radars share one scale for direct comparison.</p><div id="week-charts" class="week-charts"></div></div><p class="hint">Weighted sets approximate muscle emphasis, not measured muscle activation or training effectiveness. Overall balance uses the per-week average of the rotation.</p></section>
 <footer>Your checkmarks are saved only in this browser. You can reset each section at any time.</footer>
 </main>
 <script src="template-version.js"></script>
@@ -139,6 +146,23 @@ function radarChart(){
   for(const id of week.sessions){const values=metrics(byId[id]);for(const key of groups)totals[key]+=values[key]}
   return totals;
  });
+ const average=Object.fromEntries(groups.map(key=>[key,weeklyValues.reduce((total,values)=>total+values[key],0)/weeks.length]));
+ const overallScale=Math.max(1,...Object.values(average));
+ document.getElementById('radar').append(radarSvg(average,overallScale,'Overall Muscle Balance'));
+ document.getElementById('rotation-description').textContent=hasRotation?
+  'Average muscle emphasis per training week across the two-week rotation.':
+  'Estimated muscle emphasis across the scheduled strength sessions.';
+ document.getElementById('average-title').textContent=hasRotation?(weeks.length===2?'Two-Week Average':'Rotation Average'):'Weekly Summary';
+ document.getElementById('average-caption').textContent=hasRotation?'Weighted sets / week':'Estimated weighted sets';
+ const list=document.getElementById('distribution');
+ for(const key of [...groups].sort((a,b)=>average[b]-average[a])){
+  const row=document.createElement('div');row.className='dist-item';
+  const label=document.createElement('span');label.textContent=names[key];
+  const value=document.createElement('strong');value.textContent=Number(average[key].toFixed(1))+' sets';
+  row.append(label,value);list.append(row);
+ }
+ const comparison=document.getElementById('weekly-comparison');
+ if(!hasRotation){comparison.style.display='none';return}
  const sharedScale=Math.max(1,...weeklyValues.flatMap(values=>groups.map(key=>values[key])));
  const charts=document.getElementById('week-charts');
  for(let index=0;index<weeks.length;index++){
@@ -148,20 +172,8 @@ function radarChart(){
   card.append(title,sequence,radarSvg(weeklyValues[index],sharedScale,title.textContent));
   charts.append(card);
  }
- const average=Object.fromEntries(groups.map(key=>[key,weeklyValues.reduce((total,values)=>total+values[key],0)/weeks.length]));
- document.getElementById('rotation-description').textContent=hasRotation?
-  'Compare both weeks on the same scale. The summary below shows the average per training week.':
-  'Estimated muscle emphasis across the scheduled strength sessions.';
- document.getElementById('average-title').textContent=hasRotation?(weeks.length===2?'Two-Week Average':'Rotation Average'):'Weekly Summary';
- document.getElementById('average-caption').textContent=hasRotation?'Estimated sets per training week':'Estimated weighted sets';
- const list=document.getElementById('distribution');
- for(const key of [...groups].sort((a,b)=>average[b]-average[a])){
-  const row=document.createElement('div');row.className='dist-item';
-  const label=document.createElement('span');label.textContent=names[key];
-  const value=document.createElement('strong');value.textContent=Number(average[key].toFixed(1))+' sets';
-  row.append(label,value);list.append(row);
- }
 }
+
 
 const root=document.getElementById('program');
 for(const plan of plans){
